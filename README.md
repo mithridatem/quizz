@@ -5,8 +5,10 @@ git clone https://github.com/mithridatem/quizz.git quizzbackend
 cd quizz backend
 ```
 2 créer un fichier env.local
+
 3 copier le contenu du fichier .env -> env.local
-4 créer les entrées suivantes
+
+4 créer les entrées suivantes :
 ```
 ###> symfony/framework-bundle ###
 APP_ENV=dev
@@ -20,13 +22,13 @@ JWT_PUBLIC_KEY='%kernel.project_dir%/config/jwt/public.pem'
 JWT_PASSPHRASE=
 ###< lexik/jwt-authentication-bundle ###
 ```
-installer le projet
+installer le projet :
 ```bash
 composer install
 symfony console doctrine:database:create
 symonfy console doctrine:migrations:migrate
 ```
-5 créer vos clés ssl
+5 créer vos clés ssl :
 ```bash
 mkdir -p config/jwt
 openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
