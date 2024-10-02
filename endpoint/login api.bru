@@ -1,0 +1,18 @@
+meta {
+  name: login api
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://localhost:8000/api/login_check
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username":"test@test.com",
+    "password":"password"
+  }
+}
