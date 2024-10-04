@@ -16,7 +16,7 @@ class Answer
     #[ORM\Column(length: 255)]
     private ?string $text = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $valid = null;
 
     #[ORM\ManyToOne(inversedBy: 'answers')]
@@ -44,7 +44,7 @@ class Answer
         return $this->valid;
     }
 
-    public function setValid(bool $valid): static
+    public function setValid(?bool $valid): static
     {
         $this->valid = $valid;
 

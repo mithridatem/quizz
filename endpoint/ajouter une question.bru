@@ -1,0 +1,27 @@
+meta {
+  name: ajouter une question
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://127.0.0.1:8000/api/question
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjgwMjc0MjEsImV4cCI6MTcyODAzMTAyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidGVzdEB0ZXN0LmNvbSJ9.Ex8Z6Ql3e8Vw5EO3PLc1DKd_jEfSzUDWLEkF9esmDrCrqCNdukDXO6WQNsWD82ZpkkYjcY8WBpbgDV5qazoPUNNWAkJdeI-JZ-Wih6a1-47RmKYURRp0X2N1dyoWx4V0pBLkC6wWe1t-6nciKe96apfgX8zRQaT4ku9WxLBHzL42lyH1w5EUqyyIhIlMaxFIr5_Y5yHDxR8sNeL1U5_eOsZS8rVt5b7o07vnsdh0XziRoZTrdOANf6Q3OFSZbo6i-UBo28PRADxiimJAvXdvBDUnt1m8XXuyVxP9JR3CamphTrgf1DmXBiEkTq7CLE_z6v-RvFyFhKbnErl6WqyYl0PsvGkpN3VkRdP1GBJNFSxHF47emzZYDSzQOZGvCFi6vkRjIvsWxSyIm9zOy5j6tJRJN_JDrLFy492xcNdMcqDWCEdaNqc-TQPlPUgX62mcfUGYgdcudNZU1Iky7tWbzUDOS2SNIOklIL2Zvl2RsT2C5OPrrywmneY2btnqneFfFOERU1J1SCYnzQ9Hd3kQV98hHE2Kw6GDpuGvIte-tXX-lHgLefWoO7e3sjbbW445A_-xl18hGbvey5iBCn9OTtF-3OEOk2SJ_BefvobArJ6vRzbOiMUH2ZOCNijQzagkJSpMjBZr_edehEx7FruTWbjaYrj_Rr-NCFh0GhC-70M
+}
+
+body:json {
+  {
+    "title":"question 1",
+    "description":"1 question du quiz",
+    "pointNumber":2,
+    "answers":[
+      {"id":1,"text":"reponse 1", "valid":true},
+      {"id":2,"text":"reponse 2", "valid":false}
+    ]
+  }
+}

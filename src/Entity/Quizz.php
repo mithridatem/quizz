@@ -34,6 +34,7 @@ class Quizz
     #[ORM\ManyToMany(targetEntity: Question::class)]
     private Collection $questions;
 
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();

@@ -32,19 +32,17 @@ class QuizzController extends AbstractController
         if (!$this->utilsService->isEmptyJson($json) && array_key_exists("title", json_decode($json, true))) {
             $quizz = $this->decoder->decode($json,  'json');
             $newquizz = new Quizz();
-            $newquizz->setTitle($quizz['title']);
-            $newquizz->setDescription($quizz['title']);
-            //boucle categories
-            for ($i = 0; $i < count($quizz['categories']); $i++) 
-            {
-                if($this->categoryRepository->find($quizz['categories'][$i]["id"]) != null)
-                {
-                    $newquizz->addCategory($this->categoryRepository->find($quizz['categories'][$i]["id"])); 
+            $newquizz
+                ->setTitle($quizz['title'])
+                ->setDescription($quizz['title']);
+            //boucle ajout des categories
+            for ($i = 0; $i < count($quizz['categories']); $i++) {
+                if ($this->categoryRepository->find($quizz['categories'][$i]["id"]) != null) {
+                    $newquizz->addCategory($this->categoryRepository->find($quizz['categories'][$i]["id"]));
                 }
-                
-                return $this->json(["error" => "Category not found"]);                
+                return $this->json(["error" => "Category not found"]);
             }
-            
+
             $this->entityManager->persist($newquizz);
             $this->entityManager->flush();
         } else {

@@ -19,11 +19,11 @@ class Question
     #[ORM\Column(length: 50)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $pointNumber = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $value = null;
 
     /**
      * @var Collection<int, Answer>
@@ -58,21 +58,21 @@ class Question
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getPointNumber(): ?int
+    public function getValue(): ?int
     {
-        return $this->pointNumber;
+        return $this->value;
     }
 
-    public function setPointNumber(int $pointNumber): static
+    public function setValue(?int $value): static
     {
-        $this->pointNumber = $pointNumber;
+        $this->value = $value;
 
         return $this;
     }
