@@ -18,15 +18,15 @@ use App\Service\UtilsService;
 class QuestionController extends AbstractController
 {
     public function __construct(
-        /* private readonly QuestionRepository $questionRepository,
-        private readonly AnswerRepository $answerRepository, */
+        private readonly QuestionRepository $questionRepository,
+        private readonly AnswerRepository $answerRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly SerializerInterface $serializerInterface,
         private readonly DecoderInterface $decoder,
         private readonly UtilsService $utilsService
     ) {}
 
-/*     #[Route('/api/question', name: 'app_api_question', methods: ['POST'])]
+    #[Route('/api/question', name: 'app_api_question', methods: ['POST'])]
     public function add(Request $request): Response
     {
         $json = $request->getContent();
@@ -44,13 +44,13 @@ class QuestionController extends AbstractController
             $newQuestion
                 ->setTitle($question['title'])
                 ->setDescription($question['description'])
-                ->setPointNumber($question['pointNumber']);
+                ->setValue($question['value']);
             for ($i = 0; $i < count($question['answers']); $i++) {
                 //$newAnswer = $this->answerRepository->find($question['answers'][$i]['id']);
                 $newAnswer = new Answer();
                 $newAnswer
                     ->setText($question['answers'][$i]['text'])
-                    ->setValid($question['answers'][$i]['valid']);              
+                    ->setValid($question['answers'][$i]['valid']);                          
                 $newQuestion->addAnswer($newAnswer);
             }
             $this->entityManager->persist($newQuestion);
@@ -62,5 +62,5 @@ class QuestionController extends AbstractController
             $code = 400;
         }
         return $this->json($newQuestion, $code);
-    } */
+    }
 }
