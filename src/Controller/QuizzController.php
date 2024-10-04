@@ -28,13 +28,16 @@ class QuizzController extends AbstractController
     public function add(Request $request): Response
     {
         $json = $request->getContent();
-
-        if (!$this->utilsService->isEmptyJson($json) && array_key_exists("title", json_decode($json, true))) {
+        //test si le json est valide
+        if (
+            !$this->utilsService->isEmptyJson($json) &&
+            array_key_exists("title", json_decode($json, true))
+        ) {
             $quizz = $this->decoder->decode($json,  'json');
             $newquizz = new Quizz();
             $newquizz
-                ->setTitle($quizz['title'])
-                ->setDescription($quizz['title']);
+                ->setTitle($quizz['title'] ?? "vide")
+                ->setDescription($quizz['title'] ?? "vide");
             //boucle ajout des categories
             for ($i = 0; $i < count($quizz['categories']); $i++) {
                 if ($this->categoryRepository->find($quizz['categories'][$i]["id"]) != null) {
@@ -42,12 +45,26 @@ class QuizzController extends AbstractController
                 }
                 return $this->json(["error" => "Category not found"]);
             }
-
             $this->entityManager->persist($newquizz);
             $this->entityManager->flush();
         } else {
             $newquizz = ["error" => "Json invalide"];
         }
         return $this->json($newquizz);
+    }
+
+    #[Route('/api/quizz/{id}', name: 'app_quizz_id', methods: 'GET')]
+    public function get(int $id): Response
+    {
+        $quizz = $this->quizzRepository->find($id);
+        if ($quizz === null) {
+            return $this->json(["error" => "Quizz not found"]);
+        }
+        return $this->json(
+            $quizz,
+            200,
+            ['Access-Control-Allow-Origin' => '*'],
+            ['groups' => 'quizz:read']
+        );
     }
 }
