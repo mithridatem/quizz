@@ -58,7 +58,12 @@ class QuizzController extends AbstractController
     {
         $quizz = $this->quizzRepository->find($id);
         if ($quizz === null) {
-            return $this->json(["error" => "Quizz not found"]);
+            return $this->json(
+                ["error" => "Quizz not found"],
+                404,
+                ['Access-Control-Allow-Origin' => '*'],
+                []
+            );
         }
         return $this->json(
             $quizz,
