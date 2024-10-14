@@ -22,7 +22,8 @@ class CategoryController extends AbstractController
         private readonly CategoryRepository $categoryRepository,
         private readonly UtilsService $utilsService
     ) {}
-
+    
+    //ajout d'une catégorie
     #[Route('/api/category', name: 'app_api_category', methods: ['POST'])]
     public function add(Request $request): Response
     {
@@ -51,6 +52,7 @@ class CategoryController extends AbstractController
         return $this->json($category, $code);
     }
 
+    //récupération de toutes les catégories
     #[Route('/api/category/all', name: 'app_api_category_all', methods: ['GET'])]
     public function getAll(): Response
     {

@@ -50,7 +50,7 @@ class QuestionController extends AbstractController
                 $newAnswer = new Answer();
                 $newAnswer
                     ->setText($question['answers'][$i]['text'])
-                    ->setValid($question['answers'][$i]['valid']);                          
+                    ->setValid($question['answers'][$i]['valid']);
                 $newQuestion->addAnswer($newAnswer);
             }
             $this->entityManager->persist($newQuestion);
