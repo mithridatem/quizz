@@ -44,7 +44,7 @@ class QuestionController extends AbstractController
             $newQuestion
                 ->setTitle($question['title'])
                 ->setDescription($question['description'])
-                ->setValue($question['value']);
+                ->setValue($question['pointNumber']);
             for ($i = 0; $i < count($question['answers']); $i++) {
                 //$newAnswer = $this->answerRepository->find($question['answers'][$i]['id']);
                 $newAnswer = new Answer();
@@ -52,11 +52,15 @@ class QuestionController extends AbstractController
                     ->setText($question['answers'][$i]['text'])
                     ->setValid($question['answers'][$i]['valid']);
                 $newQuestion->addAnswer($newAnswer);
+                
             }
+            
             $this->entityManager->persist($newQuestion);
-            dump($newQuestion);
+            
+        /*     dump($newQuestion); */
             $this->entityManager->flush();
-            dump($newQuestion);
+            dd($newQuestion);
+            //dump($newQuestion);
         } else {
             $newQuestion = ["error" => "Json invalide"];
             $code = 400;
