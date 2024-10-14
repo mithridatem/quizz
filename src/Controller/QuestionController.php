@@ -59,7 +59,6 @@ class QuestionController extends AbstractController
             
         /*     dump($newQuestion); */
             $this->entityManager->flush();
-            dd($newQuestion);
             //dump($newQuestion);
         } else {
             $newQuestion = ["error" => "Json invalide"];
