@@ -38,6 +38,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control: 
         - { path: ^/api/category/all, roles: PUBLIC_ACCESS }
+        - { path: ^/api/question/all, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/user, roles: PUBLIC_ACCESS }
         - { path: ^/api/quizz, roles: ROLE_ADMIN }

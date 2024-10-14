@@ -64,6 +64,19 @@ class QuestionController extends AbstractController
             $newQuestion = ["error" => "Json invalide"];
             $code = 400;
         }
-        return $this->json($newQuestion, $code);
+        return $this->json($newQuestion, $code, ['access-control-allow-origin' => '*'], ['groups' => 'question:read']);
+    }
+
+    #[Route('/api/question/all', name: 'app_api_question_all', methods: ['GET'])]
+    public function getAll(): Response
+    {
+        $questions = $this->questionRepository->findAll();
+        if ($questions) {
+            return $this->json($questions, 200, ['access-control-allow-origin' => '*'], ['groups' => 'question:read']);
+        } else {
+            $questions = ["error" => "Aucune question trouvée"];
+            $code = 400;
+        }
+        return $this->json($questions, $code, ['access-control-allow-origin' => '*'],[]);
     }
 }

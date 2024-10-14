@@ -16,25 +16,26 @@ class Question
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['quizz:read'])]
+    #[Groups(['quizz:read', 'question:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['quizz:read'])]
+    #[Groups(['quizz:read', 'question:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['quizz:read'])]
+    #[Groups(['quizz:read', 'question:read'])]
     private ?string $description = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['quizz:read'])]
+    #[Groups(['quizz:read', 'question:read'])]
     private ?int $value = null;
 
     /**
      * @var Collection<int, Answer>
      */
     #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade:['persist', 'remove'])]
+    #[Groups(['quizz:read', 'question:read'])]
     private Collection $answers;
 
     public function __construct()
