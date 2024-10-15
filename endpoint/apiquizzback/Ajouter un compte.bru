@@ -1,0 +1,20 @@
+meta {
+  name: Ajouter un compte
+  type: http
+  seq: 5
+}
+
+post {
+  url: https://quizz.adrardev.fr/api/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstname":"Prénom",
+    "lastname":"Nom",
+    "email":"email2@mail.com",
+    "password":"password"
+  }
+}

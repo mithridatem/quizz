@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Quizz;
 use App\Repository\QuizzRepository;
+use App\Repository\QuestionRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -18,6 +19,7 @@ class QuizzController extends AbstractController
 {
     public function __construct(
         private readonly QuizzRepository $quizzRepository,
+        private readonly QuestionRepository $questionRepository,
         private readonly CategoryRepository $categoryRepository,
         private readonly EntityManagerInterface $entityManager,
         private readonly SerializerInterface $serializerInterface,
@@ -40,17 +42,28 @@ class QuizzController extends AbstractController
                 ->setDescription($quizz['title'] ?? "vide");
             //boucle ajout des categories
             for ($i = 0; $i < count($quizz['categories']); $i++) {
-                if ($this->categoryRepository->find($quizz['categories'][$i]["id"]) != null) {
+                
+                if ($this->categoryRepository->find($quizz['categories'][$i]["id"])) {
                     $newquizz->addCategory($this->categoryRepository->find($quizz['categories'][$i]["id"]));
+                }else{
+                    return $this->json(["error" => "Category not found"]);
                 }
-                return $this->json(["error" => "Category not found"]);
+            }
+            //parcours des questions
+            for ($i = 0; $i <count($quizz['questions']); $i++) {
+                $question = $this->questionRepository->find($quizz['questions'][$i]["id"]);
+                if ($question) {
+                    $newquizz->addQuestion($question);
+                } else {
+                    return $this->json(["error" => "Question not found"]);
+                }
             }
             $this->entityManager->persist($newquizz);
             $this->entityManager->flush();
         } else {
             $newquizz = ["error" => "Json invalide"];
         }
-        return $this->json($newquizz);
+        return $this->json($newquizz, 200, ['Access-Control-Allow-Origin' => '*'], ['groups' => 'quizz:read']);
     }
 
     #[Route('/api/quizz/{id}', name: 'app_quizz_id', methods: 'GET')]
