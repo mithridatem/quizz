@@ -46,7 +46,7 @@ class QuizzController extends AbstractController
                 if ($this->categoryRepository->find($quizz['categories'][$i]["id"])) {
                     $newquizz->addCategory($this->categoryRepository->find($quizz['categories'][$i]["id"]));
                 }else{
-                    return $this->json(["error" => "Category not found"]);
+                    return $this->json(["error" => "Category not found"], 400,  ['Access-Control-Allow-Origin' => '*']);
                 }
             }
             //parcours des questions
@@ -55,15 +55,17 @@ class QuizzController extends AbstractController
                 if ($question) {
                     $newquizz->addQuestion($question);
                 } else {
-                    return $this->json(["error" => "Question not found"]);
+                    return $this->json(["error" => "Question not found"], 400,  ['Access-Control-Allow-Origin' => '*']);
                 }
             }
             $this->entityManager->persist($newquizz);
             $this->entityManager->flush();
+            $code = 200;
         } else {
             $newquizz = ["error" => "Json invalide"];
+            $code = 400;
         }
-        return $this->json($newquizz, 200, ['Access-Control-Allow-Origin' => '*'], ['groups' => 'quizz:read']);
+        return $this->json($newquizz, $code, ['Access-Control-Allow-Origin' => '*'], ['groups' => 'quizz:read']);
     }
 
     #[Route('/api/quizz/{id}', name: 'app_quizz_id', methods: 'GET')]
@@ -71,6 +73,26 @@ class QuizzController extends AbstractController
     {
         $quizz = $this->quizzRepository->find($id);
         if ($quizz === null) {
+            return $this->json(
+                ["error" => "Quizz not found"],
+                404,
+                ['Access-Control-Allow-Origin' => '*'],
+                []
+            );
+        }
+        return $this->json(
+            $quizz,
+            200,
+            ['Access-Control-Allow-Origin' => '*'],
+            ['groups' => 'quizz:read']
+        );
+    }
+
+    #[Route('/api/quizz', name: 'app_quizz_all', methods: 'GET')]
+    public function getAll(): Response
+    {
+        $quizz = $this->quizzRepository->findAll();
+        if($quizz === null){
             return $this->json(
                 ["error" => "Quizz not found"],
                 404,
