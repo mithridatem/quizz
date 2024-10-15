@@ -88,7 +88,7 @@ class QuizzController extends AbstractController
         );
     }
 
-    #[Route('/api/quizz/all', name: 'app_quizz_all', methods: 'GET')]
+    #[Route('/api/quizzs/all', name: 'app_quizz_all', methods: 'GET')]
     public function getAll(): Response
     {
         $quizz = $this->quizzRepository->findAll();
