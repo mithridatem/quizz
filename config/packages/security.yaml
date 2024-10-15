@@ -39,6 +39,7 @@ security:
     access_control: 
         - { path: ^/api/category/all, roles: PUBLIC_ACCESS }
         - { path: ^/api/quizz/all, roles: PUBLIC_ACCESS }
+        - { path: ^/api/quizz/\d+$, roles: PUBLIC_ACCESS }
         - { path: ^/api/question/all, roles: PUBLIC_ACCESS }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/user, roles: PUBLIC_ACCESS }
